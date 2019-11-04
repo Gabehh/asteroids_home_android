@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "834732042513",
+    "firebase_url": "https://asteroids-6dda8.firebaseio.com",
+    "project_id": "asteroids-6dda8",
+    "storage_bucket": "asteroids-6dda8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834732042513:android:1e7375b9629d489585c4b0",
+        "android_client_info": {
+          "package_name": "com.smarthome.asteroids"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834732042513-e4bem2sd4ii9st1qf2pr4h44301o680s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smarthome.asteroids",
+            "certificate_hash": "81609a2295897fc3b2605f626db9baf191c8e368"
+          }
+        },
+        {
+          "client_id": "834732042513-17bn8ji2lclk43la357v9ebtq9sv523v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPuX0vQpxkSCg4nUL9BTtFRpSYiUQHDys"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834732042513-17bn8ji2lclk43la357v9ebtq9sv523v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
