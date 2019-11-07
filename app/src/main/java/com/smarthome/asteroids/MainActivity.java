@@ -1,7 +1,6 @@
 package com.smarthome.asteroids;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,7 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
+import java.util.List;
+import java.util.stream.Collectors;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -111,6 +112,10 @@ public class MainActivity extends AppCompatActivity{
                 mFirebaseAuth.signOut();
         }
         return true;
+
+
+
+
     }
 
 
@@ -120,8 +125,7 @@ public class MainActivity extends AppCompatActivity{
                 ,getString(R.string.apiKey)).enqueue(new Callback<Asteroids>() {
             @Override
             public void onResponse(Call<Asteroids> call, Response<Asteroids> response) {
-                Asteroids asteroids = response.body();
-                Map<String, ArrayList<Asteroid>> asteroidsList = (Map<String, ArrayList<Asteroid>>)asteroids.getNear_earth_objects();
+                getData(response);
             }
 
             @Override
@@ -158,6 +162,22 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
+
+    public void getData(Response<Asteroids> response){
+        ArrayList<ArrayList<Asteroid>> valueList = new ArrayList<>((response.body().getNear_earth_objects()).values());
+        ArrayList<Asteroid> asteroidsTable = new ArrayList<>();
+        valueList.forEach(u->asteroidsTable.addAll(u));
+        List<AsteroidTable> table = asteroidsTable.stream().map(u-> new AsteroidTable(u.getName(),u.getIs_potentially_hazardous_asteroid(),
+                u.getAbsolute_magnitude_h(),u.getClose_approach_data()[0].getClose_approach_date_full(),
+                u.getClose_approach_data()[0].getMiss_distance().getKilometers()))
+                .collect(Collectors.toList());
+        ListView lvListAsteroids = findViewById(R.id.lvListAsteroids);
+        lvListAsteroids.setAdapter(new AsteroidsAdapter(
+                this,
+                new ArrayList<>(table),
+                R.layout.list_asteroids
+        ));
+    };
 
 
 

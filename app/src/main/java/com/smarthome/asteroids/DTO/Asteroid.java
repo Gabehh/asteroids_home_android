@@ -21,6 +21,10 @@ public class Asteroid {
 
     private Close_approach_data[] close_approach_data;
 
+    public Asteroid(){
+
+    }
+
     public Estimated_diameter getEstimated_diameter ()
     {
         return estimated_diameter;

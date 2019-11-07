@@ -60,14 +60,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Magnitud Absoluta" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Peligroso" />
+            android:text="Magnitud Abs" />
 
         <TextView
             android:id="@+id/textView4"
@@ -77,11 +70,20 @@
             android:text="Fecha" />
 
         <TextView
+            android:id="@+id/textView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Peligroso" />
+
+
+
+        <TextView
             android:id="@+id/textView5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Distancia" />
+            android:text="Distancia (Km)" />
 
     </LinearLayout>
 

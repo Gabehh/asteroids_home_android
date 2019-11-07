@@ -1,19 +1,22 @@
 package com.smarthome.asteroids.DTO;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class Asteroids
 {
-    private Object near_earth_objects;
+    private Map<String, ArrayList<Asteroid>> near_earth_objects;
 
     private String element_count;
 
     private Links links;
 
-    public Object getNear_earth_objects ()
+    public  Map<String, ArrayList<Asteroid>> getNear_earth_objects ()
     {
         return near_earth_objects;
     }
 
-    public void setNear_earth_objects (Object near_earth_objects)
+    public void setNear_earth_objects( Map<String, ArrayList<Asteroid>> near_earth_objects)
     {
         this.near_earth_objects = near_earth_objects;
     }
