@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Asteroids Home</string>
+    <string name="signed_in">Signed in!</string>
+    <string name="signed_out">Signed out!</string>
+    <string name="signed_cancelled">Signed in cancelled</string>
+    <string name="logout_button">Logout</string>
+    <string name="firebase_user_fmt">Firebase User: %s</string>
+    <string name="apiKey">7OuDmkW9oxSB1zjUEYfNoLKhcMhe2zF9qgeTqhoV</string>
 </resources>
