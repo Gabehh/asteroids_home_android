@@ -13,8 +13,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.smarthome.asteroids.DTO.Asteroid;
 import com.smarthome.asteroids.DTO.Asteroids;
 import java.text.SimpleDateFormat;
@@ -39,15 +42,22 @@ public class MainActivity extends AppCompatActivity{
     private EditText date;
     private EditText initialDate;
     private EditText endDate;
+    private DatabaseReference databaseReference;
+    private FirebaseDatabase firebaseDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FirebaseApp.initializeApp(this);
         mFirebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
         initialDate =  findViewById(R.id.dateInitial);
         endDate = findViewById(R.id.dateEnd);
         setDateTimeField();
+
         initialDate.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -56,6 +66,7 @@ public class MainActivity extends AppCompatActivity{
                 return false;
             }
         });
+
         endDate.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -92,7 +103,6 @@ public class MainActivity extends AppCompatActivity{
         };
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -112,12 +122,13 @@ public class MainActivity extends AppCompatActivity{
                 mFirebaseAuth.signOut();
         }
         return true;
-
-
-
-
     }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
 
     public void Find(View view){
         api.getLogin(((EditText)findViewById(R.id.dateInitial)).getText().toString(),
@@ -125,7 +136,7 @@ public class MainActivity extends AppCompatActivity{
                 ,getString(R.string.apiKey)).enqueue(new Callback<Asteroids>() {
             @Override
             public void onResponse(Call<Asteroids> call, Response<Asteroids> response) {
-                getData(response);
+                GetData(response);
             }
 
             @Override
@@ -135,12 +146,6 @@ public class MainActivity extends AppCompatActivity{
         });
 
 
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.options_menu, menu);
-        return true;
     }
 
     private void setDateTimeField() {
@@ -162,8 +167,7 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-
-    public void getData(Response<Asteroids> response){
+    public void GetData(Response<Asteroids> response){
         ArrayList<ArrayList<Asteroid>> valueList = new ArrayList<>((response.body().getNear_earth_objects()).values());
         ArrayList<Asteroid> asteroidsTable = new ArrayList<>();
         valueList.forEach(u->asteroidsTable.addAll(u));
@@ -178,7 +182,6 @@ public class MainActivity extends AppCompatActivity{
                 R.layout.list_asteroids
         ));
     };
-
 
 
 }
