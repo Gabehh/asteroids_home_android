@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -171,6 +172,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 R.layout.list_asteroids
         ));
         lvListAsteroids.setOnItemClickListener(this);
+        TextView countAsteroids =  findViewById(R.id.textCount);
+        countAsteroids.setText(String.valueOf(table.size()));
     };
 
     @Override

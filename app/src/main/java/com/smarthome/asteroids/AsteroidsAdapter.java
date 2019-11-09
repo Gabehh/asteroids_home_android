@@ -1,18 +1,12 @@
 package com.smarthome.asteroids;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-
-import com.smarthome.asteroids.DTO.Asteroid;
-
 import java.util.ArrayList;
 
 public class AsteroidsAdapter extends ArrayAdapter {
@@ -39,6 +33,7 @@ public class AsteroidsAdapter extends ArrayAdapter {
         }
         AsteroidTable asteroidTable = asteroids.get(position);
         if (asteroidTable != null) {
+
             TextView tvNombre = convertView.findViewById(R.id.tvName);
             tvNombre.setText(asteroidTable.getName());
             TextView tvDistancia = convertView.findViewById(R.id.tvDistancia);
@@ -50,21 +45,11 @@ public class AsteroidsAdapter extends ArrayAdapter {
             TextView tvDate = convertView.findViewById(R.id.tvFecha);
             tvDate.setText(String.valueOf(asteroidTable.getDate()));
 
-            if(asteroidTable.getIsDangerous() == "Si"){
-                tvNombre.setBackgroundResource(R.color.blue);
-                tvDistancia.setBackgroundResource(R.color.blue);
-                tvPeligroso.setBackgroundResource(R.color.blue);
-                tvMagnitud.setBackgroundResource(R.color.blue);
-                tvDate.setBackgroundResource(R.color.blue);
-            }
+            if(asteroidTable.getIsDangerous() == "Si")
+                convertView.setBackgroundResource(R.color.blue);
             else
-            {
-                tvNombre.setBackgroundResource(R.color.white);
-                tvDistancia.setBackgroundResource(R.color.white);
-                tvPeligroso.setBackgroundResource(R.color.white);
-                tvMagnitud.setBackgroundResource(R.color.white);
-                tvDate.setBackgroundResource(R.color.white);
-            }
+                convertView.setBackgroundResource(R.color.white);
+
         }
         return convertView;
     }
