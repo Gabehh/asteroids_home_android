@@ -7,7 +7,6 @@
     android:layout_height="wrap_content"
     android:background="@android:color/background_light">
 
-
     <TextView
         android:id="@+id/tvName"
         android:layout_width="0dp"

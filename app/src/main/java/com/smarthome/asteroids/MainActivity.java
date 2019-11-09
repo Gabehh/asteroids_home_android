@@ -2,22 +2,21 @@ package com.smarthome.asteroids;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.smarthome.asteroids.DTO.Asteroid;
 import com.smarthome.asteroids.DTO.Asteroids;
 import java.text.SimpleDateFormat;
@@ -31,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements ListView.OnItemClickListener{
 
     final static String LOG_TAG = "MiW";
     private FirebaseAuth mFirebaseAuth;
@@ -42,18 +41,15 @@ public class MainActivity extends AppCompatActivity{
     private EditText date;
     private EditText initialDate;
     private EditText endDate;
-    private DatabaseReference databaseReference;
-    private FirebaseDatabase firebaseDatabase;
+
+    private List<AsteroidTable> table;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FirebaseApp.initializeApp(this);
         mFirebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
         initialDate =  findViewById(R.id.dateInitial);
         endDate = findViewById(R.id.dateEnd);
         setDateTimeField();
@@ -75,8 +71,8 @@ public class MainActivity extends AppCompatActivity{
                 return false;
             }
         });
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
 
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -84,7 +80,6 @@ public class MainActivity extends AppCompatActivity{
                     CharSequence username = user.getDisplayName();
                     Toast.makeText(MainActivity.this, getString(R.string.firebase_user_fmt, username), Toast.LENGTH_LONG).show();
                     Log.i(LOG_TAG, "onAuthStateChanged() " + getString(R.string.firebase_user_fmt, username));
-                    //((TextView) findViewById(R.id.textView)).setText(getString(R.string.firebase_user_fmt, username));
                     api = MyApiAdapter.getApiService();
                 } else {
                     startActivityForResult(
@@ -131,7 +126,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void Find(View view){
-        api.getLogin(((EditText)findViewById(R.id.dateInitial)).getText().toString(),
+        api.getAsteroids(((EditText)findViewById(R.id.dateInitial)).getText().toString(),
                 ((EditText)findViewById(R.id.dateEnd)).getText().toString()
                 ,getString(R.string.apiKey)).enqueue(new Callback<Asteroids>() {
             @Override
@@ -144,15 +139,11 @@ public class MainActivity extends AppCompatActivity{
 
             }
         });
-
-
     }
 
     private void setDateTimeField() {
-
         Calendar newCalendar = Calendar.getInstance();
         mDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
@@ -160,18 +151,16 @@ public class MainActivity extends AppCompatActivity{
                 final Date startDate = newDate.getTime();
                 String fdate = sd.format(startDate);
                 date.setText(fdate);
-
             }
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
         mDatePickerDialog.getDatePicker();
-
     }
 
     public void GetData(Response<Asteroids> response){
         ArrayList<ArrayList<Asteroid>> valueList = new ArrayList<>((response.body().getNear_earth_objects()).values());
         ArrayList<Asteroid> asteroidsTable = new ArrayList<>();
         valueList.forEach(u->asteroidsTable.addAll(u));
-        List<AsteroidTable> table = asteroidsTable.stream().map(u-> new AsteroidTable(u.getName(),u.getIs_potentially_hazardous_asteroid(),
+        table = asteroidsTable.stream().map(u-> new AsteroidTable(Integer.parseInt(u.getId()), u.getName(),u.getIs_potentially_hazardous_asteroid(),
                 u.getAbsolute_magnitude_h(),u.getClose_approach_data()[0].getClose_approach_date_full(),
                 u.getClose_approach_data()[0].getMiss_distance().getKilometers()))
                 .collect(Collectors.toList());
@@ -181,7 +170,15 @@ public class MainActivity extends AppCompatActivity{
                 new ArrayList<>(table),
                 R.layout.list_asteroids
         ));
+        lvListAsteroids.setOnItemClickListener(this);
     };
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(MainActivity.this, ShowAsteroid.class);
+        intent.putExtra("Resultado", table.get(position));
+        startActivity(intent);
+    }
 
 
 }
