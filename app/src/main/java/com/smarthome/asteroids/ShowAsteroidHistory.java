@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +36,7 @@ public class ShowAsteroidHistory extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // ...
+                ShowMessage(databaseError.getMessage());
             }
         });
     }
@@ -95,5 +96,13 @@ public class ShowAsteroidHistory extends AppCompatActivity {
         rangeOrbit.setText(asteroidMetaData.getOrbital_data().getOrbit_class().getOrbit_class_range());
         arumentPerihelio.setText(asteroidMetaData.getOrbital_data().getPerihelion_argument());
         isDangerous.setText(asteroidMetaData.getIs_potentially_hazardous_asteroid());
+    }
+
+    private void ShowMessage(String message){
+        Snackbar.make(
+                findViewById(android.R.id.content),
+                message,
+                Snackbar.LENGTH_LONG
+        ).show();
     }
 }

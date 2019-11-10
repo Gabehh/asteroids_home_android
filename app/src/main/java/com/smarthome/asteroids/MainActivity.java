@@ -253,12 +253,14 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 case 0:
                     ColorLamp(new Color(19,62,187));
                     textLamp.setBackgroundResource(R.color.blue);
+                    textLamp.setText("Azul");
                     break;
                 case 1:
                 case 2:
                 case 3:
                     ColorLamp(new Color(34,187,19));
                     textLamp.setBackgroundResource(R.color.green);
+                    textLamp.setText("Verde");
                     break;
                 default:
                     RainbowLamp();
