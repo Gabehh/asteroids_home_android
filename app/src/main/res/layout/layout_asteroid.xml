@@ -22,6 +22,7 @@
                     android:layout_width="154dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:textStyle="bold|italic"
                     android:text="DETALLES DEL ASTEROIDE" />
 
             </LinearLayout>
@@ -78,6 +79,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
+                    android:textStyle="bold|italic"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:text="DIAMETRO ESTIMADO" />
@@ -223,6 +225,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold|italic"
                     android:layout_weight="2"
                     android:text="DATOS DEL ACERCAMIENTO" />
 
@@ -356,6 +359,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold|italic"
                     android:layout_weight="2"
                     android:text="DATOS DE LA ORBITA" />
 

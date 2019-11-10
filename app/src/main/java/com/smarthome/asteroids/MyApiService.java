@@ -1,6 +1,4 @@
 package com.smarthome.asteroids;
-
-import com.smarthome.asteroids.DTO.Asteroid;
 import com.smarthome.asteroids.DTO.AsteroidMetaData;
 import com.smarthome.asteroids.DTO.Asteroids;
 import retrofit2.Call;

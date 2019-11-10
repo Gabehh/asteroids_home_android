@@ -22,6 +22,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.smarthome.asteroids.DTO.Asteroid;
 import com.smarthome.asteroids.DTO.Asteroids;
+import com.smarthome.asteroids.DTOLamp.Color;
+
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -32,6 +36,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.xml.transform.Result;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private static final int RC_SIGN_IN = 2019;
     private MyApiService api;
+    private LampApiServer lampApi;
     private DatePickerDialog mDatePickerDialog;
     private EditText date;
     private EditText initialDate;
@@ -51,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     private List<AsteroidTable> table;
     private ListView lvListAsteroids;
     private TextView countAsteroids;
+    private long asteroidDangerous;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +143,12 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 countAsteroids.setText("");
                 ((EditText)findViewById(R.id.dateInitial)).setText("");
                 ((EditText)findViewById(R.id.dateEnd)).setText("");
+                ((TextView)findViewById(R.id.textLamp)).setBackgroundResource(R.color.white);
+                ((TextView)findViewById(R.id.textLamp)).setText("");
+                return true;
+            case R.id.optionHistorial:
+                startActivity(new Intent(this, History.class));
+                return true;
         }
         return true;
     }
@@ -205,6 +220,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             ));
             lvListAsteroids.setOnItemClickListener(this);
             countAsteroids.setText(String.valueOf(table.size()));
+            asteroidDangerous = table.stream().filter(u->u.getIsDangerous().equals("Si")).count();
+            this.CallLamp();
         }
         catch (Exception ex){
             this.ShowMessage(ex.getMessage());
@@ -225,6 +242,111 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 Snackbar.LENGTH_LONG
         ).show();
     }
+
+    public void CallLamp(){
+        try {
+            TextView textLamp = findViewById(R.id.textLamp);
+            lampApi = LampApiadapter.getApiService();
+            OnLamp();
+            SoundLamp();
+            switch ((int)asteroidDangerous){
+                case 0:
+                    ColorLamp(new Color(19,62,187));
+                    textLamp.setBackgroundResource(R.color.blue);
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                    ColorLamp(new Color(34,187,19));
+                    textLamp.setBackgroundResource(R.color.green);
+                    break;
+                default:
+                    RainbowLamp();
+                    textLamp.setText("Arcoíris");
+                    break;
+            }
+        }
+        catch (Exception ex){
+            this.ShowMessage(ex.getMessage());
+        }
+    }
+
+    public void SoundLamp(){
+        if (table.size() >= 10) {
+            lampApi.setBeep().enqueue(new Callback<Result>() {
+                @Override
+                public void onResponse(Call<Result> call, Response<Result> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<Result> call, Throwable t) {
+                    ShowMessage(t.getMessage());
+                }
+            });
+        }
+    }
+
+    public void ColorLamp(Color color)
+    {
+        lampApi.setColor(color).enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                ShowMessage(t.getMessage());
+            }
+        });
+    }
+
+    public void RainbowLamp()
+    {
+        lampApi.setRainbow().enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                ShowMessage(t.getMessage());
+            }
+        });
+    }
+
+    public void OnLamp()
+    {
+        lampApi.onLamp().enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                ShowMessage(t.getMessage());
+            }
+        });
+    }
+
+    public void OffLamp()
+    {
+        lampApi.offLamp().enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                ShowMessage(t.getMessage());
+            }
+        });
+    }
+
 
 
 }
