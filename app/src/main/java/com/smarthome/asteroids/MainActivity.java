@@ -1,5 +1,6 @@
 package com.smarthome.asteroids;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -16,11 +17,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.smarthome.asteroids.DTO.Asteroid;
 import com.smarthome.asteroids.DTO.Asteroids;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -30,6 +35,7 @@ import java.util.stream.Collectors;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class MainActivity extends AppCompatActivity implements ListView.OnItemClickListener{
 
@@ -42,8 +48,9 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     private EditText date;
     private EditText initialDate;
     private EditText endDate;
-
     private List<AsteroidTable> table;
+    private ListView lvListAsteroids;
+    private TextView countAsteroids;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +60,12 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         mFirebaseAuth = FirebaseAuth.getInstance();
         initialDate =  findViewById(R.id.dateInitial);
         endDate = findViewById(R.id.dateEnd);
+        lvListAsteroids = findViewById(R.id.lvListAsteroids);
+        countAsteroids = findViewById(R.id.textCount);
         setDateTimeField();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setIcon(R.drawable.ic_telescope);
+        actionBar.setDisplayShowHomeEnabled(true);
 
         initialDate.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -97,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 }
             }
         };
+
     }
 
     @Override
@@ -109,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     protected void onResume() {
         super.onResume();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+
     }
 
 
@@ -116,6 +130,10 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         switch (item.getItemId()) {
             case R.id.optionOff:
                 mFirebaseAuth.signOut();
+                lvListAsteroids.setAdapter(null);
+                countAsteroids.setText("");
+                ((EditText)findViewById(R.id.dateInitial)).setText("");
+                ((EditText)findViewById(R.id.dateEnd)).setText("");
         }
         return true;
     }
@@ -127,19 +145,33 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     }
 
     public void Find(View view){
-        api.getAsteroids(((EditText)findViewById(R.id.dateInitial)).getText().toString(),
-                ((EditText)findViewById(R.id.dateEnd)).getText().toString()
-                ,getString(R.string.apiKey)).enqueue(new Callback<Asteroids>() {
-            @Override
-            public void onResponse(Call<Asteroids> call, Response<Asteroids> response) {
-                GetData(response);
-            }
+        String dateInitial = ((EditText)findViewById(R.id.dateInitial)).getText().toString();
+        String dateEnd = ((EditText)findViewById(R.id.dateEnd)).getText().toString();
+        if(dateInitial.equals("") || dateEnd.equals("")){
+            this.ShowMessage("Debe ingresar ambas fechas");
+            return;
+        }
+        LocalDate d1 = LocalDate.parse(dateInitial, DateTimeFormatter.ISO_LOCAL_DATE);
+        LocalDate d2 = LocalDate.parse(dateEnd, DateTimeFormatter.ISO_LOCAL_DATE);
+        Duration diff = Duration.between(d1.atStartOfDay(), d2.atStartOfDay());
+        long diffDays = diff.toDays();
+        if(diffDays>=0 && diffDays<=7) {
+            api.getAsteroids(((EditText) findViewById(R.id.dateInitial)).getText().toString(),
+                    ((EditText) findViewById(R.id.dateEnd)).getText().toString()
+                    , getString(R.string.apiKey)).enqueue(new Callback<Asteroids>() {
+                @Override
+                public void onResponse(Call<Asteroids> call, Response<Asteroids> response) {
+                    GetData(response);
+                }
 
-            @Override
-            public void onFailure(Call<Asteroids> call, Throwable t) {
-
-            }
-        });
+                @Override
+                public void onFailure(Call<Asteroids> call, Throwable t) {
+                    ShowMessage(t.getMessage());
+                }
+            });
+        }
+        else
+            this.ShowMessage("La fecha solo puede tener hasta 7 días de diferencia.");
     }
 
     private void setDateTimeField() {
@@ -158,29 +190,40 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     }
 
     public void GetData(Response<Asteroids> response){
-        ArrayList<ArrayList<Asteroid>> valueList = new ArrayList<>((response.body().getNear_earth_objects()).values());
-        ArrayList<Asteroid> asteroidsTable = new ArrayList<>();
-        valueList.forEach(u->asteroidsTable.addAll(u));
-        table = asteroidsTable.stream().map(u-> new AsteroidTable(Integer.parseInt(u.getId()), u.getName(),u.getIs_potentially_hazardous_asteroid(),
-                u.getAbsolute_magnitude_h(),u.getClose_approach_data()[0].getClose_approach_date_full(),
-                u.getClose_approach_data()[0].getMiss_distance().getKilometers()))
-                .collect(Collectors.toList());
-        ListView lvListAsteroids = findViewById(R.id.lvListAsteroids);
-        lvListAsteroids.setAdapter(new AsteroidsAdapter(
-                this,
-                new ArrayList<>(table),
-                R.layout.list_asteroids
-        ));
-        lvListAsteroids.setOnItemClickListener(this);
-        TextView countAsteroids =  findViewById(R.id.textCount);
-        countAsteroids.setText(String.valueOf(table.size()));
-    };
+        try {
+            ArrayList<ArrayList<Asteroid>> valueList = new ArrayList<>((response.body().getNear_earth_objects()).values());
+            ArrayList<Asteroid> asteroidsTable = new ArrayList<>();
+            valueList.forEach(u -> asteroidsTable.addAll(u));
+            table = asteroidsTable.stream().map(u -> new AsteroidTable(Integer.parseInt(u.getId()), u.getName(), u.getIs_potentially_hazardous_asteroid(),
+                    u.getAbsolute_magnitude_h(), u.getClose_approach_data()[0].getClose_approach_date_full(),
+                    u.getClose_approach_data()[0].getMiss_distance().getKilometers()))
+                    .collect(Collectors.toList());
+            lvListAsteroids.setAdapter(new AsteroidsAdapter(
+                    this,
+                    new ArrayList<>(table),
+                    R.layout.list_asteroids
+            ));
+            lvListAsteroids.setOnItemClickListener(this);
+            countAsteroids.setText(String.valueOf(table.size()));
+        }
+        catch (Exception ex){
+            this.ShowMessage(ex.getMessage());
+        }
+    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(MainActivity.this, ShowAsteroid.class);
         intent.putExtra("Resultado", table.get(position));
         startActivity(intent);
+    }
+
+    private void ShowMessage(String message){
+        Snackbar.make(
+                findViewById(android.R.id.content),
+                message,
+                Snackbar.LENGTH_LONG
+        ).show();
     }
 
 
