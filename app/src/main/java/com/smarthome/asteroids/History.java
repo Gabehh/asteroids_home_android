@@ -24,6 +24,7 @@ public class History extends AppCompatActivity implements ListView.OnItemClickLi
     private AsteroidMetaData asteroidMetaData;
     private ListView lvListHistory;
     private List<AsteroidMetaData> list;
+    private List<AsteroidHistory> table;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +51,7 @@ public class History extends AppCompatActivity implements ListView.OnItemClickLi
     }
 
     public void GetData() {
-        List<AsteroidHistory> table = list.stream().map(u -> new AsteroidHistory(Integer.parseInt(u.getId()), u.getName(), u.getIs_potentially_hazardous_asteroid(),
+        table = list.stream().map(u -> new AsteroidHistory(Integer.parseInt(u.getId()), u.getName(), u.getIs_potentially_hazardous_asteroid(),
                 u.getAbsolute_magnitude_h()))
                 .collect(Collectors.toList());
         lvListHistory = findViewById(R.id.lvListHistory);
@@ -62,9 +63,12 @@ public class History extends AppCompatActivity implements ListView.OnItemClickLi
         lvListHistory.setOnItemClickListener(this);
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Intent intent = new Intent(History.this, ShowAsteroidHistory.class);
+        intent.putExtra("History", table.get(position));
+        startActivity(intent);
     }
 
 }

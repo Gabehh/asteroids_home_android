@@ -23,9 +23,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.smarthome.asteroids.DTO.Asteroid;
 import com.smarthome.asteroids.DTO.Asteroids;
 import com.smarthome.asteroids.DTOLamp.Color;
-
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -148,6 +145,9 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 return true;
             case R.id.optionHistorial:
                 startActivity(new Intent(this, History.class));
+                return true;
+            case R.id.optionHelp:
+                startActivity(new Intent(this, Help.class));
                 return true;
         }
         return true;

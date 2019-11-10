@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="aboutMessage">Asteroid Home permite localizar los asteroides más cercanos a la tierra con un límite de 7 días entre búsqueda. Cada asteroide cuenta con numerosas características, permitiendo al usuario guardar los asteroides que considere como objeto de estudio. La lámpara encenderá las luces de acuerdo a los resultados de los asteroides obtenidos.</string>
+
+</resources>

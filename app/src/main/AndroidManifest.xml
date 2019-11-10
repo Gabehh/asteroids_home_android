@@ -17,11 +17,20 @@
         </activity>
         <activity
             android:name=".ShowAsteroid"
-            android:label="Asteroide">
+            android:label="Asteroide Seleccionado">
+        </activity>
+        <activity
+            android:name=".ShowAsteroidHistory"
+            android:label="Asteroide Guardado">
         </activity>
         <activity
             android:name=".History"
             android:label="Historial de Asteroides">
+        </activity>
+        <activity
+            android:name=".Help"
+            android:theme="@android:style/Theme.Material.Dialog.MinWidth"
+            android:label="Ayuda">
         </activity>
     </application>
 

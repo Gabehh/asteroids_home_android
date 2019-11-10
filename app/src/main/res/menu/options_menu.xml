@@ -13,11 +13,6 @@
         android:orderInCategory="20"
         />
     <item
-        android:id="@+id/optionSettings"
-        android:title="Configuración"
-        android:orderInCategory="20"
-        />
-    <item
         android:id="@+id/optionHelp"
         android:title="Ayuda"
         android:orderInCategory="20"
