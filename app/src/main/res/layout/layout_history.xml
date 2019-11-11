@@ -11,25 +11,25 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Código" />
+            android:text="@string/gridCodigo" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Nombre" />
+            android:text="@string/gridName" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Magnitud Abs" />
+            android:text="@string/gridMagnitude" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Peligroso" />
+            android:text="@string/gridDangerous" />
 
     </LinearLayout>
     <ListView

@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,6 +32,9 @@ public class History extends AppCompatActivity implements ListView.OnItemClickLi
         setContentView(R.layout.layout_history);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("Asteroid");
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setIcon(R.drawable.ic_telescope);
+        actionBar.setDisplayShowHomeEnabled(true);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override

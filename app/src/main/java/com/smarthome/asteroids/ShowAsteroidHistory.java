@@ -3,6 +3,7 @@ package com.smarthome.asteroids;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -26,6 +27,9 @@ public class ShowAsteroidHistory extends AppCompatActivity {
         setContentView(R.layout.layout_asteroid_history);
         asteroidHistory = getIntent().getParcelableExtra("History");
         firebaseDatabase = FirebaseDatabase.getInstance();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setIcon(R.drawable.ic_telescope);
+        actionBar.setDisplayShowHomeEnabled(true);
         databaseReference = firebaseDatabase.getReference().child("Asteroid");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

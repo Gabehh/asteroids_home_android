@@ -265,6 +265,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 default:
                     RainbowLamp();
                     textLamp.setText("Arcoíris");
+                    textLamp.setBackgroundResource(R.color.white);
                     break;
             }
         }
@@ -278,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             lampApi.setBeep().enqueue(new Callback<Result>() {
                 @Override
                 public void onResponse(Call<Result> call, Response<Result> response) {
-
+                    //ShowMessage("Sonido");
                 }
 
                 @Override
@@ -294,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         lampApi.setColor(color).enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-
+                //ShowMessage("Color");
             }
 
             @Override
@@ -309,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         lampApi.setRainbow().enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-
+               // ShowMessage("Arcoíris");
             }
 
             @Override
@@ -324,7 +325,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         lampApi.onLamp().enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-
+                ShowMessage("On");
             }
 
             @Override
@@ -339,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         lampApi.offLamp().enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-
+                ShowMessage("Off");
             }
 
             @Override

@@ -21,7 +21,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:textStyle="bold|italic"
-                    android:text="DETALLES DEL ASTEROIDE" />
+                    android:text="@string/detallesAsteroide" />
 
             </LinearLayout>
 
@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="ID:"/>
+                    android:text="@string/idAsteroide"/>
 
                 <TextView
                     android:id="@+id/textViewIdHistory"
@@ -46,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Name:"/>
+                    android:text="@string/nameAsteroide"/>
 
                 <TextView
                     android:id="@+id/textViewNameHistory"
@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Magnitud Absoluta:"/>
+                    android:text="@string/magnitudeAsteroide"/>
 
                 <TextView
                     android:id="@+id/textViewMagnitudeHistory"
@@ -79,7 +79,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Es Peligroso:"/>
+                    android:text="@string/isDangerous"/>
 
                 <TextView
                     android:id="@+id/textViewDangerousHistory"
@@ -100,7 +100,7 @@
                     android:textStyle="bold|italic"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="DIAMETRO ESTIMADO" />
+                    android:text="@string/diametroEstimado" />
 
             </LinearLayout>
 
@@ -114,7 +114,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Kilómetros Min:"/>
+                    android:text="@string/kilometrosMin"/>
 
                 <TextView
                     android:id="@+id/textViewKmMinHistory"
@@ -136,7 +136,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Kilómetros Max:"/>
+                    android:text="@string/kilometrosMax"/>
 
                 <TextView
                     android:id="@+id/textViewKmMaxHistory"
@@ -156,7 +156,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Metros Min:"/>
+                    android:text="@string/metrosMin"/>
 
                 <TextView
                     android:id="@+id/textViewMMinHistory"
@@ -176,7 +176,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Metros Max:"/>
+                    android:text="@string/metrosMax"/>
 
                 <TextView
                     android:id="@+id/textViewMMaxHistory"
@@ -197,7 +197,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Millas Min:"/>
+                    android:text="@string/millasMin"/>
 
                 <TextView
                     android:id="@+id/textViewMiMinHistory"
@@ -218,7 +218,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Millas Max:"/>
+                    android:text="@string/millasMax"/>
 
                 <TextView
                     android:id="@+id/textViewMiMaxHistory"
@@ -239,7 +239,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Feet Min:"/>
+                    android:text="@string/feetMin"/>
 
                 <TextView
                     android:id="@+id/textViewFeetMinHistory"
@@ -258,7 +258,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Feet Max:"/>
+                    android:text="@string/feetMax"/>
 
                 <TextView
                     android:id="@+id/textViewFeetMaxHistory"
@@ -279,7 +279,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold|italic"
                     android:layout_weight="2"
-                    android:text="DATOS DE LA ORBITA" />
+                    android:text="@string/datosOrbita" />
 
             </LinearLayout>
 
@@ -293,7 +293,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Intersección Mín de la Orbita:"/>
+                    android:text="@string/intersectionMinOrbita"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -312,7 +312,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Parámetro de Tisserand:"/>
+                    android:text="@string/parametroTisserand"/>
 
                 <TextView
                     android:id="@+id/textTisserandHistory"
@@ -332,7 +332,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Época de osculación:"/>
+                    android:text="@string/osculacion"/>
 
                 <TextView
                     android:id="@+id/textOsculationHistory"
@@ -352,7 +352,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Excentricidad:"/>
+                    android:text="@string/excentricidad"/>
 
                 <TextView
                     android:id="@+id/textEccentricityHistory"
@@ -372,7 +372,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Semieje Mayor:"/>
+                    android:text="@string/semiEjeMayor"/>
 
                 <TextView
                     android:id="@+id/textSemiEjeHistory"
@@ -392,7 +392,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Inclinación:"/>
+                    android:text="@string/inclinacion"/>
 
                 <TextView
                     android:id="@+id/textInclinationHistory"
@@ -412,7 +412,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Longitud Nodo Ascendente:"/>
+                    android:text="@string/longitudNodo"/>
 
                 <TextView
                     android:id="@+id/textNodeLongitudeHistory"
@@ -432,7 +432,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Periodo Orbital:"/>
+                    android:text="@string/periodoOrbital"/>
 
                 <TextView
                     android:id="@+id/textOrbitalPeriodHistory"
@@ -452,7 +452,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Distancia del Perihelio:"/>
+                    android:text="@string/distanciaPerihelio"/>
 
                 <TextView
                     android:id="@+id/textDistancePerihelionHistory"
@@ -473,7 +473,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Argumento del Perihelio:"/>
+                    android:text="@string/argumentoPerihelio"/>
 
                 <TextView
                     android:id="@+id/textArgumentPerihelionHistory"
@@ -494,7 +494,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Distancia del Afelio:"/>
+                    android:text="@string/distanciaAfelio"/>
 
                 <TextView
                     android:id="@+id/textAphelionDistanceHistory"
@@ -514,7 +514,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Tiempo del perihelio:"/>
+                    android:text="@string/tiempoPerihelio"/>
 
                 <TextView
                     android:id="@+id/textPerihelionTimeHistory"
@@ -534,7 +534,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Equinox:"/>
+                    android:text="@string/equinox"/>
 
                 <TextView
                     android:id="@+id/textEquinoxHistory"
@@ -554,7 +554,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Tipo Orbita:"/>
+                    android:text="@string/tipoOrbita"/>
 
                 <TextView
                     android:id="@+id/textTypeOrbitHistory"
@@ -574,7 +574,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Rango de la Orbita:"/>
+                    android:text="@string/rangoOrbita"/>
 
                 <TextView
                     android:id="@+id/textRangeOrbitHistory"
